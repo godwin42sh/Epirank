@@ -34,7 +34,7 @@ Class Epirank
 
 	private $cookieFile = "";
 
-	public function __construct($promo = array('tek1', 'tek2', 'tek3', 'tek4', 'tek5'), $year = '2016')
+	public function __construct($promo = array('tek4', 'tek3', 'tek2', 'tek1', 'tek5'), $year = '2016')
 	{
 		if (file_exists("./config.json") === false)
 			die("The config file is missing.\n");
@@ -149,6 +149,31 @@ Class Epirank
 		$conn->close();
 	}
 
+	public function updateAllStudents()
+	{
+		$this->getSavedStudents();
+
+		$conn = new mysqli($this->db['servername'], $this->db['username'], $this->db['password'], $this->db['dbname']);
+
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+
+		foreach ($this->savedStudents as $login => $gpa)
+		{
+			$infoStu = $this->getGPAPromo($login);
+
+			$sql = "UPDATE Student SET gpa='".$infoStu['gpa']."' WHERE login='".$login."';";
+
+			if ($conn->query($sql) === TRUE)
+				echo "Update for student : ".$login."\n";
+			else
+				echo "Error for student ".$login.": ".$conn->error."\n";
+		}
+
+		$conn->close();
+	}
+
 	public function saveAllStudents()
 	{
 		echo "Script begin\n";
@@ -156,7 +181,7 @@ Class Epirank
 		do {
 			$promo = array_shift($this->promo);
 
-			echo "Begin for ".$promo.":\n";
+			echo "Begin for '".$promo."':\n";
 
 			$this->offset = 0;
 			$students = $this->getStudents($promo);
@@ -166,7 +191,7 @@ Class Epirank
 				$this->saveStudents($students);
 				$students = $this->getStudents($promo);
 			}
-			echo "End for ".$promo."\n";
+			echo "End for '".$promo."'\n";
 		}
 		while (!empty($promo));
 
@@ -229,7 +254,7 @@ Class Epirank
 		} while ($info['http_code'] != 200 && $i < 2);
 
 		if ($i == 2)
-			die("Error cUrl:".$info['http_code']." (GPA)\n");
+			die("Error cUrl:".$info['http_code']." (GPA) for ".$login."\n");
 
 		curl_close($ch);
 
@@ -249,12 +274,9 @@ Class Epirank
 	}
 }
 
-if (isset($argv[1])) {
-	$promo = $argv[1];
-	$epirank = new Epirank(array($promo));
-}
-else
-	$epirank = new Epirank();
+$epirank = new Epirank();
 
 
-$epirank->saveAllStudents();
+if (isset($argv[1]) && $argv[1] == 'save')
+	$epirank->saveAllStudents();
+$epirank->updateAllStudents();
