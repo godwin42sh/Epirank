@@ -1,5 +1,5 @@
 <?php
-require_once './vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 Class Epirank
 {
@@ -41,10 +41,10 @@ Class Epirank
 
 	public function __construct($promo = '2017')
 	{
-		if (file_exists("./config.json") === false)
+		if (file_exists("../config.json") === false)
 			die("The config file is missing.\n");
 
-		$configEncoded = file_get_contents("./config.json");
+		$configEncoded = file_get_contents("../config.json");
 
 		if (($config = json_decode($configEncoded)) == null)
 			die("The config file is invalid.\n");
@@ -60,7 +60,7 @@ Class Epirank
 		$this->promo = $promo;
 		$this->city = null;
 
-		$loader = new Twig_Loader_Filesystem('./templates');
+		$loader = new Twig_Loader_Filesystem(realpath('../templates'));
 
 		$this->twig = new Twig_Environment($loader, array(
 		    'cache' => false,
@@ -90,6 +90,7 @@ Class Epirank
 			die("Connection failed: " . $conn->connect_error);
 		}
 
+
 		$sql = "SELECT login, gpa, city, promo, modified FROM Student WHERE promo='".$this->promo."'";
 
 		if ($this->city != null)
@@ -104,14 +105,12 @@ Class Epirank
 		    	$parsedRes[] = $row;
 		    }
 		}
-		else
-			return null;
 
 		$conn->close();
 
 		usort($parsedRes, array($this, 'sortByGPA'));
 
-		echo $this->twig->render('index.html', array(
+		return $this->twig->render('index.html', array(
 													 'students' => $parsedRes,
 													 'currentPromo' => $this->promo,
 													 'currentCity' => $this->city,
@@ -119,10 +118,5 @@ Class Epirank
 													 'promotions' => $this->authorizedPromo
 													)
 								);
-		die;
 	}
 }
-
-$epirank = new Epirank();
-
-$epirank->index();

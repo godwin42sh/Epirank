@@ -4,3 +4,5 @@ cookie.txt
 cache/*
 vendor/*
 composer.lock
+.htaccess
+webroot/.htaccess
