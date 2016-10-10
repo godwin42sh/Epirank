@@ -1,0 +1,15 @@
+{
+	"db": {
+		"servername": "localhost",
+		"username": "user",
+		"password": "pass",
+		"dbname": "dbName"
+	},
+	"log": {
+		"login": "email epitech",
+		"password": "pass unix"	
+	},
+	"cookie": {
+		"path": "path to cookie file"
+	}
+}

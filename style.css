@@ -1,0 +1,61 @@
+body {
+    background: white url("Sniper.png") no-repeat right top;
+}
+
+h1#main-title {
+    text-align: center;
+    margin: 40px;
+}
+
+div#main-container {
+    margin: 200px;
+    width: 500px;
+}
+
+table#ranking-table {
+    margin: 20px 0 20px 0;
+}
+
+table#ranking-table th {
+}
+
+table#ranking-table td {
+}
+
+.btn {
+    margin-bottom: 5px !important;
+}
+
+.btn a {
+    color: #fff;
+}
+
+.btn:hover a {
+    color: #fff;
+}
+
+.strong
+{
+    font-weight: bold;
+}
+
+.subtitle {
+    font-size: 28px;
+    font-weight: bold;
+    padding-right: 10px;
+    text-align: center;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+div#options-box {
+    font-size: 16px;
+    line-height: 25px;
+}
+
+div.update-info-box {
+    font-weight: bold;
+    margin: 10px 0 10px 0;
+}
