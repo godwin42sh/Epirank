@@ -41,7 +41,6 @@ Class Epirank
 
 		$configEncoded = file_get_contents("./config.json");
 
-
 		if (($config = json_decode($configEncoded)) == null)
 			die("The config file is invalid.\n");
 
@@ -138,13 +137,13 @@ Class Epirank
 			die("Connection failed: " . $conn->connect_error);
 		}
 
-		$sql = "SELECT login FROM Student";
+		$sql = "SELECT login, gpa FROM Student";
 		$result = $conn->query($sql);
 
 		if ($result->num_rows > 0) {
 
 			while ($row = $result->fetch_assoc()) {
-				$this->savedStudents[$row['login']] = true;
+				$this->savedStudents[$row['login']] = $row['gpa'];
 			}
 		}
 		$conn->close();
@@ -234,11 +233,17 @@ Class Epirank
 
 		curl_close($ch);
 
+
 		$gpa = substr($content, strpos($content, "<label>G.P.A.</label>") + 49, 4);
+
+		if ($gpa == "bach")
+			$gpa = substr($content, strpos($content, "<label>G.P.A.</label>") + 60, 4);
+
 		$gpa = is_numeric($gpa) ? $gpa : null;
 
 		$promo = substr($content, strpos($content, '<div class="promo">') + 33, 4);
 		$promo = is_numeric($promo) ? $promo : null;
+
 
 		return (array('gpa' => $gpa, 'promo' => $promo));
 	}
