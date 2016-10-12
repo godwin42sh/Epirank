@@ -59,3 +59,8 @@ div.update-info-box {
     font-weight: bold;
     margin: 10px 0 10px 0;
 }
+
+a.linkCity:focus, a.linkCity:hover,
+a.linkPromo:focus, a.linkPromo:hover {
+    text-decoration: none;
+}

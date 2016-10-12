@@ -26,17 +26,17 @@
 		</div>
 
 		{% for city in cities %}
-	    <button type="button" class="btn btn-info">
-	    	<a href="?city={{ city }}&promo={{ currentPromo }}">{{ city }}</a>
-	    </button>
+	    <a class="linkCity" href="?city={{ city }}&promo={{ currentPromo }}">
+	    	<button type="button" class="btn btn-info">{{ city }}</button>
+	    </a>
 	    {% endfor %}
  	  </div>
 	  <div class="subtitle">Promotions</div>
 	  <div style="text-align:center;">
 		{% for promo in promotions %}
-	    <button type="button" class="btn btn-info">
-	    	<a href="?city={{ currentCity }}&promo={{ promo }}">{{ promo }}</a>
-	    </button>
+	    <a class="linkPromo" href="?city={{ currentCity }}&promo={{ promo }}">
+	    	<button type="button" class="btn btn-info">{{ promo }}</button>
+	    </a>
 	    <!-- <a href="?city={{ currentCity }}&promo={{ promo }}">{{ promo }}</a> -  -->
 	    {% endfor %}
 	  </div>
