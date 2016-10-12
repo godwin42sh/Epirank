@@ -74,14 +74,10 @@ Class Epirank
 
 	public function index()
 	{
-		if (isset($_GET['promo']) && !isset($this->authorizedPromo[$_GET['promo']]))
-			return null;
-		else if (isset($_GET['promo']))
+		if (isset($_GET['promo']) && isset($this->authorizedPromo[$_GET['promo']]))
 			$this->promo = $this->authorizedPromo[$_GET['promo']];
 
-		if (isset($_GET['city']) && !isset($this->authorizedCities[$_GET['city']]))
-			return null;
-		else if (isset($_GET['city']))
+		if (isset($_GET['city']) && isset($this->authorizedCities[$_GET['city']]))
 			$this->city = $this->authorizedCities[$_GET['city']];
 
 		$conn = new mysqli($this->db['servername'], $this->db['username'], $this->db['password'], $this->db['dbname']);

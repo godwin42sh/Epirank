@@ -20,9 +20,11 @@
 	  <div class="subtitle">Cities</div>
 	  <div id="options-box">
 	    <div>
-	    	<button type="button" class="btn btn-danger">	    
-				<a href="?promo={{ currentPromo }}">All</a>
-		    </button>
+			<a class="linkCity" href="?promo={{ currentPromo }}">
+		    	<button type="button" class="btn btn-danger">
+		    	All
+			    </button>
+			</a>
 		</div>
 
 		{% for city in cities %}
